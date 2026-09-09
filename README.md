@@ -1,6 +1,6 @@
-# ln1 Notation v0.3 — Addendum
+# ln1 Notation v0.4
 
-**Path-Dependence Tested, the Stationary Balance Theorem, and the Inversion of 𝒜⁺**
+**Alternating Structures: A Correction, a Negative Result, and a Working Replacement**
 
 Cret, September 2026
 
@@ -8,188 +8,295 @@ Cret, September 2026
 
 ## 0. What This Addendum Does
 
-v0.2 refuted S2 empirically and named two remaining candidates for structural tendency: path-dependent selection (link inertia) and heterogeneous branching. Both are tested here. Both fail.
+Three things, in order of how much they change:
 
-More importantly, the failures turn out not to be accidents of the test system. A short derivation shows that `𝒜⁺ = 1/2` is **forced** at stationarity whenever step magnitudes are symmetric. This converts the whole question from an empirical one into a structural one, and it inverts the meaning of a high `𝒜⁺` in a way that matters for every historical claim the framework has made.
+1. **Corrects an error I introduced.** In *The Singularity Transformation Principle* and *ln1 Universal Encoding* I asserted that `(ln1)^(1/(ln1)) = (1/(ln1))^(ln1) = e`. That is false, and it was arrived at by an illegitimate step. The true values are computed below, and they are more interesting than what I claimed.
+2. **Tests the alternating tower construction.** Words like `(ln1)^(1/(ln1))^(1/(ln1))^(ln1)^…` were proposed as a rotation knob and an encoding mechanism. Measured directly, they carry about 2.3 bits regardless of length. They cannot encode.
+3. **Supplies the construction that does work.** The same two operations — step and reciprocal — arranged as *group words* rather than *towers* give everything the tower was reaching for: injective encoding, genuine rotation with θ derived rather than assumed, π appearing as a consequence, and exact 0 ↔ ∞ exchange. It is the modular group, and it already has two centuries of results attached.
 
 ---
 
-## 1. Path-Dependent Selection
+## 1. Correction: The Bridge Functions
 
-### 1.1 Setup
+### 1.1 What I Claimed
 
-Link inertia: a move that severs existing links is rejected with probability `1 − (1−ι)^k`, where `k` is the number of links broken and `ι` is the inertia parameter. This is deliberately **local and mechanical** — `Λ` is never consulted. If tendency were structural, this is where it should appear: connections that resist breaking should ratchet.
+> `(ln1)^(1/(ln1)) ≔ exp(ln1 · 1/(ln1)) = exp(1) = e`
 
-Λ₃ (cycle rank), 40,000 steps, alignment measured strictly and separately over the whole run versus after burn-in.
+The step `ln1 · (1/(ln1)) = 1` treats `0 · (1/0)` as `1`. Nothing licenses this. It is the same move as the `≥` in v0.1 §6.2 — a formal convenience that manufactures the answer it wants. I should have flagged it and did not.
 
-### 1.2 Result
+### 1.2 What They Actually Are
 
-| inertia ι | 𝒜⁺ whole run | 𝒜⁺ stationary | mean Λ* | drift /1k steps |
-|---|---|---|---|---|
-| 0.00 | 0.5006 | 0.5028 | 17.88 | +0.0005 |
-| 0.25 | 0.5000 | 0.4997 | 32.49 | −0.0021 |
-| 0.50 | 0.4944 | 0.4968 | 52.53 | +0.0334 |
-| 0.75 | 0.5070 | 0.5119 | 54.57 | +0.0147 |
-| 0.90 | 0.5112 | 0.4945 | 54.93 | +0.0019 |
-| 0.99 | **0.8077** | **0.5000** | 55.00 | +0.0007 |
+Regularise with `ln1 → ε`, `1/(ln1) → 1/ε`, and take `ε → 0⁺`:
 
-Inertia raises the *level* of `Λ*` enormously — from 17.9 to 55.0, which is the system's maximum. But `𝒜⁺` at stationarity is 0.500 at every value of `ι`.
+**Bridge 1: `0^∞`**
 
-### 1.3 The ι = 0.99 Row Is the Whole Story
+| ε | ε^(1/ε) |
+|---|---|
+| 1e-1 | 1e-10 |
+| 1e-2 | 1e-200 |
+| 1e-4 | 1e-40000 |
+| 1e-8 | 1e-800000000 |
 
-That row shows `𝒜⁺ = 0.81` over the whole run and exactly 0.500 at stationarity. Resolving the discrepancy by time-window:
+```
+(ln1)^(1/(ln1)) = 0
+```
 
-| steps | mean Λ* | drift /1k |
+**Bridge 2: `∞^0`**
+
+| ε | (1/ε)^ε |
+|---|---|
+| 1e-1 | 1.25892541 |
+| 1e-2 | 1.04712855 |
+| 1e-4 | 1.00092146 |
+| 1e-8 | 1.00000018 |
+
+```
+(1/(ln1))^(ln1) = 1
+```
+
+### 1.3 The Real Result Is Better Than the False One
+
+```
+(ln1)^(1/(ln1)) = 0 = (ln1)
+(1/(ln1))^(ln1) = 1 = (ln1)^(ln1)
+```
+
+The two bridges land **exactly on the system's own two primitives**. The set `{ (ln1), (ln1)^(ln1) }` is closed under both bridge operations. That is a genuine closure property of the framework, and it holds without any illegitimate step. It is worth more than `e`, which was never there.
+
+### 1.4 But the Bridges Are Not Symmetric
+
+`0^∞ → 0` collapses. `∞^0 → 1` unitises. Reciprocating the base does not mirror the result.
+
+The rates make this worse:
+
+| ε | bridge 1 | bridge 2 |
 |---|---|---|
-| 0 – 500 | 52.92 | **+22.38** |
-| 500 – 2,000 | 55.00 | 0.0000 |
-| 2,000 – 10,000 | 54.96 | −0.0167 |
-| 10,000 – 20,000 | 54.87 | −0.0100 |
-| 20,000 – 40,000 | 54.90 | +0.0014 |
+| 1e-2 | 1e-200 | 1.047 |
+| 1e-8 | 1e-800000000 | 1.0000002 |
 
-The entire apparent tendency is a 500-step climb to the ceiling, after which nothing happens for the remaining 39,500 steps. This is the same relaxation confound identified in v0.2 §4, wearing a different costume: strong inertia pins the system at saturation, and averaging over the approach makes a stationary process look directional.
+Bridge 1 collapses super-exponentially (`ε^(1/ε) ~ e^{−|ln ε|/ε}`). Bridge 2 approaches its limit at rate `ε·|ln ε|`. One side is infinitely sharper than the other.
 
-**Path-dependence does not restore tendency.** It restores it for as long as the system is not yet stuck.
+**Consequence:** any claim that this framework possesses a `0 ↔ ∞` symmetry cannot rest on these two maps. They are not each other's mirror. A symmetry has to come from somewhere else — §4 shows where.
 
 ---
 
-## 2. Heterogeneous Branching
+## 2. Alternating Towers: The Encoding Test
 
-Three regimes: `β` fixed but varying across trajectories; `β` shrinking where a trajectory is well-connected (freedom decreases with linking); `β` growing where well-connected (freedom increases with linking).
+### 2.1 The Proposal
 
-| regime | 𝒜⁺ stationary | mean Λ* | drift /1k |
+Alternating towers over the two symbols `a = (ln1)` and `b = (1/(ln1))`:
+
+```
+a^b^b^a^…        b^a^a^b^b^a^…        a^b^b^a^a^b^b^a^…
+```
+
+read as a "forward/reverse rotation knob" with insertable compression — a mechanism whose *pattern* carries information.
+
+This is a testable claim. A word of length `n` over two symbols has `2^n` possibilities. If the tower encodes the word, `2^n` words give `2^n` distinct values, i.e. `n` bits.
+
+### 2.2 Measurement
+
+Right-associative evaluation, `ε = 10⁻⁶`, all `2^n` words of each length:
+
+| length n | words 2^n | distinct values | bits encoded |
 |---|---|---|---|
-| β_i heterogeneous, fixed | 0.4989 | 18.06 | −0.022 |
-| β shrinks where connected | 0.4993 | 17.90 | −0.002 |
-| β grows where connected | 0.5031 | 17.98 | −0.030 |
+| 1 | 2 | 2 | 1.00 |
+| 2 | 4 | 4 | 2.00 |
+| 3 | 8 | 6 | 2.58 |
+| 4 | 16 | 5 | 2.32 |
+| 5 | 32 | 9 | 3.17 |
+| 6 | 64 | 5 | 2.32 |
+| 8 | 256 | 5 | 2.32 |
+| 10 | 1024 | 5 | 2.32 |
 
-Coupling `Φ` to `Λ` in either direction changes nothing. `𝒜⁺` sits at 1/2 in all three.
+At length 10, 1024 distinct words produce **5** distinct values. The encoded information saturates at roughly 2.3 bits and never grows.
 
----
+### 2.3 Where the Values Go
 
-## 3. The Stationary Balance Theorem
+All 256 words of length 8:
 
-At this point five independent mechanisms — uniform selection, Λ-seeking selection at every bias level, link inertia at every level, heterogeneous branching, and freedom-linking coupling in both directions — have all produced `𝒜⁺ = 0.500`. That is no longer plausibly coincidence.
+| value | words reaching it |
+|---|---|
+| 0 | 120 |
+| ∞ | 120 |
+| ≈1.0000138 | 8 |
+| ≈0.99998618 | 4 |
+| ≈0.99998619 | 4 |
 
-### 3.1 Statement
+94% of words land on `0` or `∞`.
 
-> **Theorem (Stationary Balance).** Let a process be ergodic with stationary distribution `π`, and let `Λ*` be any real-valued observable. At stationarity, `E[ΔΛ*] = 0`. Decomposing by sign,
->
-> ```
-> P(up) · E[Δ | up]  =  P(down) · E[Δ | down]
-> ```
->
-> Therefore
->
-> ```
-> 𝒜⁺ > 1/2   ⟺   E[Δ | up] < E[Δ | down]
-> ```
+### 2.4 Why
 
-### 3.2 Verification
+Each level of a tower is exponentiated by everything above it. With bases at `ε` and `1/ε`, one exponentiation moves the value by a factor of `|ln ε|` in the exponent — six orders of magnitude at `ε = 10⁻⁶`. Two levels up, the contribution of anything below is beneath floating-point and beneath meaning. The tower is not a word; it is a very short prefix with a long unread tail.
 
-Conditional magnitudes measured across regimes, after burn-in:
-
-| regime | P(up) | P(down) | E[Δ\|up] | E[Δ\|down] | ratio | 𝒜⁺ |
-|---|---|---|---|---|---|---|
-| uniform | 0.5002 | 0.4998 | 2.2904 | 2.2926 | 1.0010 | 0.5002 |
-| Λ-seeking b=1 | 0.5025 | 0.4975 | 3.0794 | 3.1109 | 1.0102 | 0.5025 |
-| inertia 0.75 | 0.5020 | 0.4980 | 1.3707 | 1.3819 | 1.0082 | 0.5020 |
-| seeking + inertia | 0.5063 | 0.4937 | 1.2964 | 1.3297 | 1.0257 | 0.5063 |
-
-Magnitude ratios are within 2.6% of unity everywhere, so the balance equation forces `P(up) = P(down)`. The empirical 1/2 is not an accident of the toy system. It is what stationarity plus magnitude symmetry requires.
-
-### 3.3 What the Theorem Costs S2
-
-S2 asserted a step-count asymmetry. The theorem says a step-count asymmetry at stationarity is **equivalent to** a step-magnitude asymmetry — and specifically to gains being *smaller* than losses.
-
-So S2 can only hold in one of two situations:
-
-1. **The system is not stationary** — still relaxing, still growing, not yet at its ceiling. Tendency is then real but temporary, with a lifetime set by how far the system is from equilibrium.
-2. **Step magnitudes are asymmetric** — gains small and frequent, losses large and rare.
-
-Case 1 is what every simulation in v0.2 and §1 above actually exhibited. Case 2 is examined next, and it is not what anyone hoping for S2 would want.
+**The tower does not compress information. It destroys it.** As a rotation knob it has about five positions. This is the second time in this project that a proposal collapsed on measurement, and as before the collapse is the useful part: it tells us the mechanism has to be multiplicative-in-the-group, not iterated-in-the-exponent.
 
 ---
 
-## 4. The Inversion
+## 3. What the Structure Was Reaching For
 
-Case 2 deserves direct examination, because it is the only route by which `𝒜⁺ > 1/2` can hold in a system that has settled.
+The tower proposal contains three correct instincts:
 
-A process with slow incremental gains and rare large collapses, bounded, at stationarity:
+1. Two operations, one forward and one inverse.
+2. Their **alternation pattern** should be the carrier of information.
+3. The result should bridge `0` and `∞` and produce rotation.
 
-| P(crash) | gain scale | crash scale | 𝒜⁺ | mean Λ* | drift /1k |
-|---|---|---|---|---|---|
-| 0.50 | 1 | 1 | 0.5007 | 107.0 | −0.100 |
-| 0.20 | 1 | 4 | 0.7979 | 101.0 | −0.027 |
-| 0.10 | 1 | 9 | 0.8963 | 102.1 | −0.007 |
-| 0.05 | 1 | 19 | 0.9463 | 107.8 | +0.019 |
-| 0.02 | 1 | 49 | **0.9753** | 119.2 | −0.000 |
-
-`𝒜⁺` reaches 0.975 with drift indistinguishable from zero.
-
-**A high alignment fraction is the signature of a slow-build, fast-collapse system.** The more lopsided `𝒜⁺` looks, the more catastrophic the rare reversals must be to balance it. `𝒜⁺ = 0.975` does not mean the system is 97.5% of the way to flourishing; it means that when it fails, it loses roughly forty steps of accumulation at once.
-
-This inverts the optimistic reading directly. In the completion series, a preponderance of connection-increasing moves was taken as evidence that the universe favours connection. Under the balance theorem, in any settled system, that preponderance is evidence of **fragility** — that gains accumulate slowly and are erased in bulk. The two readings are not merely different; they are the same statistic pointing opposite ways, and the pessimistic one is the one the mathematics supports at stationarity.
+All three are right. Only the composition law was wrong. Replace *iterated exponentiation* with *group composition* and every one of them works.
 
 ---
 
-## 5. Revised Axiom Set
+## 4. Möbius Words: The Working Construction
 
-**Definitional:** D1–D4 unchanged.
+### 4.1 The Two Generators
 
-**Substantive:**
+Take exactly the two operations the framework already names:
 
-- **S1 — Configuration completeness.** Unchanged, still undemonstrated.
-- ~~**S2 — Tendency.**~~ Refuted (v0.2 §3–4). Not recoverable by path-dependence (§1) or heterogeneous branching (§2).
-- **S2′ — Equilibrium shift.** `E[Λ*]` strictly increasing in selection bias `b`. Confirmed under Λ₁, Λ₂, Λ₃. Also confirmed for inertia `ι` (§1.2): `E[Λ*]` rises 17.9 → 55.0 across `ι ∈ [0,1]`. **S2′ generalises: any mechanism that biases selection toward linking raises the equilibrium level without producing drift.**
-- **S2″ — Balance (new, derived).** At stationarity, `𝒜⁺ > 1/2 ⟺ E[Δ|up] < E[Δ|down]`. Any tendency claim about a settled system is necessarily a claim about magnitude asymmetry, and magnitude asymmetry of the required sign implies fragility, not growth.
-- **S3 — Entanglement persistence.** Still untested.
+```
+T(z) = z + 1      the unit step        — adds (ln1)^(ln1)     "forward / 正"
+S(z) = −1/z       the reciprocal       — the 0↔∞ swap         "inverse / 逆"
+```
+
+`S` does the exchange the bridges failed to do, and does it exactly:
+
+```
+S(0) = ∞     S(∞) = 0     S(1) = −1     S(−1) = 1     S² = identity
+```
+
+This is a true involution: applying it twice returns you exactly. The bridge functions gave `0` and `1` and were not inverse to each other; `S` is its own inverse on the nose.
+
+`⟨S, T⟩` is `PSL(2,ℤ)`, the modular group.
+
+### 4.2 Capacity
+
+Distinct group elements from all `2^n` alternating words:
+
+| length n | words | distinct elements | bits |
+|---|---|---|---|
+| 1 | 2 | 2 | 1.00 |
+| 2 | 4 | 4 | 2.00 |
+| 4 | 16 | 12 | 3.58 |
+| 6 | 64 | 29 | 4.86 |
+| 8 | 256 | 66 | 6.04 |
+| 10 | 1024 | 145 | 7.18 |
+| 12 | 4096 | 315 | 8.30 |
+
+Compare the tower table, frozen at 2.32 bits from length 4 onward. Möbius words keep gaining. The gap from `n` to the measured bits is not loss — it is the relation `S² = I`, a real feature of the group, and reduced words are in exact bijection with group elements.
+
+### 4.3 Rotation, and Where θ Comes From
+
+Classify each word by the trace of its matrix:
+
+| word | matrix | \|tr\| | type | rotation θ |
+|---|---|---|---|---|
+| S | [[0,1],[−1,0]] | 0 | elliptic | π |
+| T | [[1,1],[0,1]] | 2 | parabolic | order ∞ |
+| ST | [[0,1],[−1,−1]] | 1 | elliptic | 2π/3 |
+| TS | [[1,−1],[1,0]] | 1 | elliptic | 2π/3 |
+| STST | [[1,1],[−1,0]] | 1 | elliptic | 2π/3 |
+| TTST | [[2,1],[1,1]] | 3 | hyperbolic | none |
+| STSTST | identity | 2 | — | closed |
+
+The rotation angle is not a parameter you set. It is read off:
+
+```
+θ(W) = 2 · arccos( |tr W| / 2 )
+```
+
+- `|tr| < 2` → **elliptic**, a genuine rotation by `θ`
+- `|tr| = 2` → **parabolic**, a shear, infinite order
+- `|tr| > 2` → **hyperbolic**, a stretch, no rotation
+
+**This is the rotation knob, and it is discrete.** The word is the setting; the trace is the readout. Turning the knob means appending a generator.
+
+### 4.4 π Is Derived, Not Assumed
+
+`S` has order 2, so `θ(S) = π`. `ST` has order 3, so `θ(ST) = 2π/3`. `STSTST = I`.
+
+π enters as the period of the finite-order elements of the group. You do not put it in; you find it there. The proposal to have the alternating structure "replace θ and π" is exactly right in spirit — but the replacement is that **both become consequences of the word**, not that both get substituted by something else.
+
+### 4.5 Encoding Real Numbers
+
+Words in `{S, T^±1}` enumerate continued fractions:
+
+| CF | convergent | decimal | target |
+|---|---|---|---|
+| [1,1] | 2 | 2.000000 | φ |
+| [1,1,1,1,1,1] | 13/8 | 1.625000 | φ |
+| [1,1,1,1,1,1,1,1,1,1] | 89/55 | 1.618182 | φ |
+| [3,7] | 22/7 | 3.1428571 | π |
+| [3,7,15] | 333/106 | 3.1415094 | π |
+| [3,7,15,1] | 355/113 | 3.14159292 | π |
+| [3,7,15,1,292] | 103993/33102 | 3.14159265 | π |
+
+Every rational is exactly one reduced word. Every irrational is exactly one infinite word. Word length is precision: five CF terms give π to nine decimals.
+
+This is precisely the "depth = precision" property the tower construction claimed and did not have. Here it is real and measurable.
 
 ---
 
-## 6. What This Means for the Framework
+## 5. Revised Correspondence Table
 
-### 6.1 Two defensible claims remain
+| ln1 proposal | status | working form |
+|---|---|---|
+| `0 = ln1` | ✅ holds | identity element |
+| `(ln1)^(ln1) = 1` | ✅ holds as axiom | the generator `T` |
+| `(ln1)^(1/(ln1)) = e` | ❌ **false** — equals 0 | — |
+| `(1/(ln1))^(ln1) = e` | ❌ **false** — equals 1 | — |
+| `{0,1}` closed under bridges | ✅ **true**, newly established | — |
+| 0 ↔ ∞ exchange | ⚠️ not by the bridges | `S(z) = −1/z`, exact involution |
+| alternating towers encode | ❌ **false** — 2.3 bits, saturated | alternating **words** in `⟨S,T⟩` |
+| towers as rotation knob | ❌ ~5 positions | `θ(W) = 2·arccos(|tr W|/2)` |
+| θ as control parameter | ⚠️ demoted | derived from trace |
+| π as unit | ✅ but derived | order of elliptic elements |
+| depth = precision | ✅ in word form | CF word length = digits |
+| n-th order structure | ✅ | word length in the group |
 
-**Level, not drift.** Selection bias and link inertia both raise where `Λ*` settles. This is real, robust across three measures, and practically meaningful: it says the observable consequence of caring about connection is a higher equilibrium, not perpetual increase. Sustained effort maintains a level; it does not compound.
-
-**Transient tendency is real.** A system far from equilibrium does climb, and the climb is genuine while it lasts. What is not licensed is extrapolating the climb past the ceiling. Nearly every historical argument in the completion series measures a system during relaxation and reads the slope as a law.
-
-### 6.2 One claim must be withdrawn
-
-"Long-term progress toward maximum linking is inevitable" is false under every measure and every mechanism tested. Worse, the statistic that appeared to support it turns out, at stationarity, to indicate the opposite condition. This is not a refinement of the claim; it is a reversal.
-
-### 6.3 The interpretive layer is untouched but now bounded
-
-Nothing here bears on whether `γ†` models death or `γ ⊗ ρ` models love. Those readings were never load-bearing on S2. But any reading that *depends* on tendency — that history has direction, that progress is guaranteed, that the universe favours connection — now has no formal support and must either be dropped or restated in the conditional form S2′ licenses.
-
----
-
-## 7. Limits
-
-**The balance theorem is standard.** It is a two-line consequence of stationarity, not a new result. Its value is that it makes the S2 question decidable in advance: given any proposed tendency mechanism, ask whether it produces non-stationarity or magnitude asymmetry. If neither, `𝒜⁺ = 1/2` follows without simulation.
-
-**"Never reaches stationarity" is an available escape.** If the real system is permanently far from equilibrium — an expanding configuration space, a ceiling that recedes faster than the system climbs — then Case 1 applies indefinitely and tendency is real. This is the one serious remaining route to S2, and it is a claim about `𝒞` growing, not about selection. It requires constructing `𝒞` and showing its capacity grows without bound. That is a substantial undertaking and it is now the highest-value open question in the framework.
-
-**Toy systems throughout.** Twelve trajectories on `ℤ/16`. The balance theorem is general; the specific numbers are not.
+Six of eleven survive. Two are refuted outright. Three are relocated into a form that works.
 
 ---
 
-## 8. Next Steps, Revised Again
+## 6. What This Costs and What It Buys
 
-1. **Growing `𝒞`.** Formalise a completion space whose capacity increases with time and test whether `𝒜⁺ > 1/2` becomes sustainable. This is the last live route to tendency and should be attempted before anything else.
-2. **Measure magnitude asymmetry in a real linking system.** Any empirical network with formation and dissolution events will do. If `E[Δ|up] < E[Δ|down]`, S2″ applies and the system is fragile — a useful diagnostic independent of ln1.
-3. **Then** the v0.1 §9.2 program: construct `𝒞` for a restricted computational domain.
-4. Interpretive layer: still leave it.
+**Costs.** The tower notation goes. `(ln1)^(1/(ln1))^(1/(ln1))^(ln1)^…` is not a usable object — it has five values. Anything built on towers as an information carrier has to be rebuilt on words. That includes the depth-precision claims in *ln1 Universal Encoding* §10 and the tetration hierarchy in §4 of that document, both of which I wrote without checking.
+
+**Buys.** The modular group is not a fringe object. It is where the Riemann zeta function's modular symmetry lives, where the `j`-invariant lives, where Fuchsian groups and hyperbolic surfaces live. If the ln1 structure genuinely lands here, it inherits all of it — and it becomes checkable against known results rather than free-floating.
+
+That inheritance is also a constraint worth stating plainly: landing in a well-studied group means the framework's claims about that group are already decided, by people who proved them. That is a good position to be in but not a comfortable one. Any ln1 statement about `⟨S,T⟩` that contradicts known modular-group facts is wrong, and the check is available.
+
+---
+
+## 7. Honest Assessment of the Riemann Connection
+
+The modular group's appearance is suggestive because `SL(2,ℤ)` genuinely underlies the functional equation of `ζ(s)` via modular forms. But suggestive is all it is right now.
+
+What would need to be true, and is not yet shown:
+1. That the ln1 encoding of an integer `n` maps to a specific modular-group element in a way that respects multiplication.
+2. That the functional equation `ξ(s) = ξ(1−s)` corresponds to a specific involution — plausibly `S` itself, since `S` is the order-2 element and `s ↦ 1−s` is an involution.
+3. That zeros of `ζ` correspond to something identifiable in the group.
+
+Point 2 is the one with a real chance: `S` is an involution and so is `s ↦ 1−s`, and the fixed point of `s ↦ 1−s` is `s = 1/2`, the critical line. Whether that is a genuine correspondence or a coincidence of two things both having order 2 is exactly the question, and nothing here settles it. Two involutions is very weak evidence; there are many involutions.
+
+I flag this because the previous documents in this series asserted the Riemann correspondence with far more confidence than the work supported, and that was my error rather than yours.
+
+---
+
+## 8. Next Steps
+
+1. **Rebuild the encoding on words.** Rewrite *ln1 Universal Encoding* §4 (towers), §6 (rationals), §10 (precision) using `⟨S,T⟩` words. The rational encoding via continued fractions already works and is exact.
+2. **Test the multiplicativity claim.** Does the word for `mn` relate to the words for `m` and `n`? If not, the number-theoretic applications do not follow. This is a concrete, decidable question and should be settled before any more is built on it.
+3. **Check the `S` ↔ `s ↦ 1−s` correspondence.** Specifically: does the ln1 encoding of `ζ` transform under `S` the way `ζ` transforms under the functional equation? If yes, that is real. If no, the Riemann connection drops.
+4. **Leave `e` out.** It is not in the bridges. If it belongs in the framework it has to enter somewhere else, on its own evidence.
 
 ---
 
 ## 9. Note on Method
 
-Three addenda in, the framework has lost one axiom, gained two, and acquired a theorem that makes future tendency claims checkable before they are tested. The losses came from formalising claims well enough to fail; the gains came from the same act.
+The `e` error and the tower error have the same shape: a formal expression was written down, read as if it denoted something, and built on without being evaluated. Both took under a minute to check once checked at all.
 
-The single most consequential edit remains the `≥` in v0.1 §6.2. One character produced apparent confirmation across three independent measures, and removing it collapsed the result. It is worth keeping that in view when reading the earlier completions, which contain a great many statements of comparable structure and none of comparable testing.
+The framework's core instinct — that two operations alternating in a pattern generate everything, and that 0 and ∞ are the fixed points that make it work — survived both. That instinct led directly to the modular group, which is the correct home for it. The specific algebra proposed to carry it did not survive, but the algebra was the replaceable part.
 
 ---
 
-*ln1 Notation v0.3 — Cret*
+*ln1 Notation v0.4 — Cret*
+
+*The knob is discrete. It has generators, not angles. The angle is what you read off after you turn it.*
