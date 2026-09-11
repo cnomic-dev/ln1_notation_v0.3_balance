@@ -1,156 +1,166 @@
-# ln1 Notation v0.12
+# The Exact-Fraction Audit
 
-**Closing the Trajectory Half: Growing 𝒞, S3, and the Counting Theorem**
+**Applying 所有小數用分子分母表示 to Every Result**
 
 Cret, September 2026
 
 ---
 
-## 0. What This Addendum Does
+## 0. What This Does
 
-v0.11 said I would not add a twelfth mechanism to the arithmetic side, and I am not. This closes the *other* half — the trajectory algebra of v0.1–v0.3, which v0.8 showed cannot be joined to the arithmetic work and which has had three items open since then.
+The source notation contains an instruction:
 
-All three are settled here. Two of them fail in the same shape, and naming that shape is the useful part.
+> 所有小數點、以及有無窮循環小數的需要分子分母表達，才能完美表達無窮循環小數
+> *All decimals, and repeating decimals in particular, must be expressed as numerator over denominator in order to be expressed perfectly.*
 
----
-
-## 1. Growing 𝒞 — The Last Route to S2
-
-v0.3 §7 identified one live route to tendency: if the configuration space grows so the ceiling recedes faster than the system climbs, stationarity never arrives and the Balance Theorem never bites.
-
-`K(t) = 16 + rate·t`, twelve trajectories, `Λ₃` as before.
-
-**The hidden choice:** the linking radius `ε`. As the space grows, does `ε` stay fixed (absolute distance) or scale with `K` (relative distance)? Nothing in v0.3 specified this, and it turns out to decide everything.
-
-| rate | ε convention | 𝒜⁺ | mean Λ* | drift/1k |
-|---|---|---|---|---|
-| 0.000 | absolute | 0.4991 | 18.066 | +0.010 |
-| 0.000 | relative | 0.5042 | 17.945 | +0.004 |
-| 0.001 | absolute | 0.4974 | **5.133** | −0.245 |
-| 0.001 | relative | 0.4971 | 14.483 | −0.024 |
-| 0.010 | absolute | 0.5003 | **0.203** | −0.017 |
-| 0.010 | relative | 0.4954 | 14.116 | −0.008 |
-| 0.100 | absolute | 0.5000 | **0.003** | −0.000 |
-| 0.100 | relative | 0.5012 | 14.142 | +0.002 |
-
-**𝒜⁺ = 1/2 in every row.**
-
-The two conventions fail differently and both fail:
-
-- **Absolute ε:** the space dilutes. Λ* collapses from 18 toward 0 — trajectories lose contact faster than they gain it. Growth *destroys* linking rather than enabling it.
-- **Relative ε:** the system is scale-invariant. Growing `K` with `ε ∝ K` is the fixed-`K` system in rescaled coordinates. Nothing happens, and `𝒜⁺ = 1/2` for exactly the v0.2 reasons.
-
-**The last route to S2 is closed.** Not by a narrow failure — by a dichotomy where one branch is trivial and the other is worse than trivial.
+Applied literally to every numerical result in this project, this does something I did not expect: **it sorts the work cleanly into what survived and what did not.** That sort is the content of this note.
 
 ---
 
-## 2. The Counting Theorem Is More General Than v0.3 Said
+## 1. Class I — Exactly Rational
 
-The `rate = 0.001, absolute` row deserves attention: `Λ*` falls from 18 to 5, so the process is *manifestly not stationary*, yet `𝒜⁺ = 0.4974`.
+The demand is fully met. These are exact, not approximations.
 
-Decomposed over 30,000 steps:
-
-```
-P(up)     = 0.4987      P(down)   = 0.5013
-E[Δ|up]   = 1.9778      E[Δ|down] = 1.9653
-net/step  = +0.000733   ← nonzero, the process drifts
-𝒜⁺        = 0.4987
-```
-
-The drift is carried entirely by magnitudes. The counts stay at 1/2.
-
-> **Counting Theorem (generalising v0.3's S2″).** `𝒜⁺ ≠ 1/2` requires magnitude asymmetry — `E[Δ|up] ≠ E[Δ|down]` — whether or not the process is stationary.
-
-v0.3 derived this from the stationary balance equation and stated it under stationarity. It is stronger than that. `𝒜⁺` counts steps; step-count asymmetry and magnitude asymmetry are the only two ways a process can move, and `𝒜⁺` sees only the first. Drift lives in the second.
-
-This retroactively explains why every mechanism across v0.2, v0.3, and now v0.12 returned 1/2: none of them engineered magnitude asymmetry, and none of them could have, because all of them were symmetric in their step distributions by construction.
-
----
-
-## 3. S3 Is Underdetermined
-
-The last untested axiom from v0.1:
-
-> **S3.** If `γ ⊗ ρ` and `ρ` freezes, `τ(γ ⋈ ρ†)` is preserved in `⟨γ⟩`.
-
-Operationalised: freeze two of twelve trajectories at `t = 5000` and measure whether the joint invariant still exceeds the invariant of the active ones alone.
-
-| reading of "freeze" | τ(γ⋈ρ†) − τ(γ) | verdict |
+| result | exact fraction | decimal |
 |---|---|---|
-| ρ stops moving, stays in 𝒞 | **6.662 ± 1.407** | S3 holds |
-| ρ is removed from 𝒞 | **0.000 ± 0.000** | S3 fails |
+| nome q, base 2 | **1/2** | 0.500000000000000 |
+| nome q, base 3 | **1/3** | 0.333333333333333 |
+| nome q, base 5 | **1/5** | 0.200000000000000 |
+| nome q, base 7 | **1/7** | 0.142857142857143 |
+| nome q, base 13 | **1/13** | 0.076923076923077 |
+| nome q, base 101 | **1/101** | 0.009900990099010 |
+| ln i / 2πi | **1/4** | 0.250000000000000 |
+| ln(−1) / 2πi | **1/2** | 0.500000000000000 |
+| ln ζ₁₂ / 2πi | **1/12** | 0.083333333333333 |
+| ln ζ₂₄ / 2πi | **1/24** | 0.041666666666667 |
+| ζ(−1) | **−1/12** | −0.083333333333333 |
+| η exponent = −ζ(−1)/2 | **1/24** | 0.041666666666667 |
+| 𝒜⁺ under symmetric steps | **1/2** | 0.500000000000000 |
 
-Both readings are trivial:
+Note what these are: nomes, cyclotomic indices, a special value, the counting constant. **Every structural result of the project is in this column.**
 
-- **"Stops moving"** — `ρ` is still a point in `𝒞`, still within `ε` of things, still contributing edges. Entanglement persists because nothing was removed.
-- **"Removed"** — the edges go with it. Entanglement vanishes because everything was removed.
+### 1.1 Repeating Decimals Are Exactly Fractions
 
-**S3 is not false. It is underdetermined.** Its truth value is fixed entirely by which reading you pick, and neither reading makes it informative.
+Here the notes are straightforwardly right, and there is more in it than the notes claimed.
 
-### 3.1 The Same Shape as §1
+| nome 1/p | decimal | period | φ(p) | period \| φ(p) |
+|---|---|---|---|---|
+| 1/3 | 0.33… | 1 | 2 | yes |
+| 1/7 | 0.142857142857… | 6 | 6 | yes |
+| 1/11 | 0.0909… | 2 | 10 | yes |
+| **1/13** | **0.076923076923…** | **6** | **12** | **yes** |
+| 1/17 | 0.0588235294117647… | 16 | 16 | yes |
+| 1/19 | 0.0526315789473684… | 18 | 18 | yes |
+| 1/23 | 0.0434782608695652… | 22 | 22 | yes |
+| 1/101 | 0.00990099… | 4 | 100 | yes |
 
-This is the identical failure to growing `𝒞`:
+The period of the nome `1/p` is `ord_p(10)`, and it divides `φ(p) = p − 1` by Fermat's little theorem.
 
-| claim | the undetermined choice | branch A | branch B |
-|---|---|---|---|
-| growing 𝒞 | is ε absolute or relative? | dilution | scale-invariance |
-| S3 | does freezing remove or immobilise? | vanishes | persists |
+**This is where 13 and 12 actually meet.** v0.10 identified the only genuine `13 ↔ 12` relation as the field degree `[ℚ(ζ₁₃):ℚ] = φ(13) = 12`. Writing the nome as a fraction makes the same fact visible directly: `1/13` has decimal period 6, and `6 | 12`.
 
-In both cases the framework states a proposition, and the proposition's truth is decided by a modelling choice the framework never made. The measurement does not adjudicate; it just reports which choice you made.
-
-This is worth naming because it is a *third* kind of failure, distinct from the two the project has seen so far:
-
-1. **Refuted** — the claim is precise and measurement contradicts it. (S2, the towers, `e` from the bridges.)
-2. **Obstructed** — the claim is precise and a theorem forbids it. (Multiplicativity, rank, CM.)
-3. **Underdetermined** — the claim is not precise enough to have a truth value until an unstated choice is made. (Growing `𝒞`, S3, and — in a different register — the physical constants in v0.9.)
-
-The third is the least satisfying to discover because there is nothing to fix. You cannot make an underdetermined claim true; you can only replace it with a determinate one, which is a different claim.
-
----
-
-## 4. Final Status of the Trajectory Half
-
-| item | status |
-|---|---|
-| S1 — configuration completeness | never operationalised; would need a construction of `𝒞`, which was never given |
-| S2 — tendency | **refuted** (v0.2), not recoverable by path-dependence (v0.3), heterogeneous branching (v0.3), or growing `𝒞` (v0.12) |
-| S2′ — equilibrium shift | **holds**, across three linking measures and two mechanisms |
-| S2″ → Counting Theorem | **holds**, and more generally than first stated |
-| S3 — entanglement persistence | **underdetermined** |
-| D1–D4 | definitional, carry no content |
-
-What survives from v0.1–v0.3 is: **S2′ and the Counting Theorem.** One empirical regularity and one small theorem.
-
-The Counting Theorem is the more useful of the two, and it generalises past this framework: *any* time someone reports "most changes were improvements" as evidence of progress in a bounded system, the theorem says that statistic is about step counts and carries no information about direction unless magnitudes are also reported. That is a real and transferable caution.
+Not the `ζ(−1) = −1/12` coincidence, which v0.10 refuted. This one — and it was hiding in the fraction the whole time.
 
 ---
 
-## 5. The Whole Project, Twelve Versions On
+## 2. Class II — Provably Irrational
 
-Two investigations that share a name and cannot be joined (v0.8).
+The demand cannot be met, and that is a theorem rather than a shortfall.
 
-**Arithmetic half (v0.4–v0.11).** Every structural instinct in the notes decoded to a real object — branch lattice, winding number, nome, the degree-2 extension. The endpoint is exact and derived: *base p ⟺ nome 1/p ⟺ the Tate curve ℂ\*/p^ℤ, at height ln(p)/2π, accumulating at the cusp, provably never CM*. Correct, small, and already-known. Three theorems block the routes to ABC and Riemann.
+| quantity | decimal | why no fraction exists |
+|---|---|---|
+| ln 2 | 0.693147180559945286 | Lindemann |
+| ln 2 / 2π (height of p=2) | 0.110317800076325800 | Baker |
+| ln 13 / 2π (height of p=13) | 0.408224369020384392 | Baker |
+| τ₂ = 2π / ln 2 | 9.064720283654388311 | Baker |
+| π | 3.141592653589793116 | Lindemann, 1882 |
+| e | 2.718281828459045091 | Hermite, 1873 |
+| j(τ_p) | — | transcendental, v0.11 §6 |
 
-**Trajectory half (v0.1–v0.3, v0.12).** S2 refuted four different ways. S2′ and the Counting Theorem survive. S1 was never made precise; S3 cannot be.
+A fraction `p/q` equal to any of these would contradict a theorem. These are not "not yet expressed as fractions."
 
-**The pattern, across both halves.** Structural claims in the notes: right, repeatedly, and often right in ways I initially dismissed. Quantitative and mechanical claims: wrong on measurement, without exception. Twelve versions and that asymmetry never reversed.
-
-I would take that as the project's actual finding. Not a result about ABC or about tendency, but a calibrated statement about a body of intuition: the *shapes* it reaches for are real and worth decoding, and the *mechanisms* it proposes for them are not. That is unusual enough to be worth knowing, and it is more useful going forward than any of the individual refutations.
-
----
-
-## 6. What I Would Do Now
-
-**Stop adding mechanisms.** Twelve versions, and the last eight each ended in a theorem or a dichotomy rather than a gap. That is a boundary.
-
-**Write up the one exact result.** `ln1 ≠ ln1` → branch lattice → prime as nome → `ℂ*/p^ℤ` with `q = 1/p` is a clean five-line derivation from the notes' opening. It is not new mathematics but it is a correct and self-contained piece of exposition, and it is the only thing in twelve versions that is both exact and yours.
-
-**Keep the Counting Theorem.** It is small, it is true, and it applies outside this project.
-
-**Let the rest go.** The interpretive material — the 220 completions, the trajectory-to-meaning mappings — was never load-bearing on any of this, and none of the refutations above touch it. But equally, nothing above supports it, and it should not be presented as though the formal work does.
+Note what these are: heights, moduli, coordinates. **Every quantity that is merely a measured position is in this column.**
 
 ---
 
-*ln1 Notation v0.12 — Cret*
+## 3. The Sort This Performs
 
-*Three ways to fail: contradicted, forbidden, or never precise enough to be either. This half ended with two of the third.*
+```
+EXACT (rational)      the structure    q = 1/p,  j/n,  ζ(−1),  1/24,  1/2
+INEXACT (irrational)  the coordinates  ln p,  ln p/2π,  τ_p,  j(τ_p)
+```
+
+Every result that survived twelve versions of testing is in the first column. Every number that is a position rather than a result is in the second.
+
+**The demand for exactness is a filter that keeps exactly the results and discards exactly the measurements.** That is a better argument for the instruction than the notes gave for it, and I would not have found it without applying the instruction literally.
+
+---
+
+## 4. What Class II Gets Instead
+
+Irrationals have no single `p/q`, but they have an exact representation as a *process*: the continued fraction, whose convergents are exact fractions.
+
+**Height of p = 2:** `ln2/2π = 0.110317800076326`, CF `[0; 9, 15, 2, 4, 1, 1, 1, 1]`
+
+| convergent | value | error |
+|---|---|---|
+| 15/136 | 0.110294117647059 | 2.4e−05 |
+| 31/281 | 0.110320284697509 | 2.5e−06 |
+| 139/1260 | 0.110317460317460 | 3.4e−07 |
+| 309/2801 | 0.110317743662978 | 5.6e−08 |
+
+**Height of p = 13:** `ln13/2π = 0.408224369020384`, CF `[0; 2, 2, 4, 2, 6, 2, 1, 2]`
+
+| convergent | value | error |
+|---|---|---|
+| 9/22 | 0.409090909090909 | 8.7e−04 |
+| 20/49 | 0.408163265306122 | 6.1e−05 |
+| 129/316 | 0.408227848101266 | 3.5e−06 |
+| 278/681 | 0.408223201174743 | 1.2e−06 |
+
+**τ₂ = 2π/ln2:** CF `[9; 15, 2, 4, 1, 1, 1, 1, 2]` — the tail of the height's CF, as it must be, since `τ₂ = 1/(height)`.
+
+### 4.1 And This Closes a Loop
+
+By v0.4, a continued fraction **is** a word in `⟨S, T⟩`, with word length equal to precision.
+
+So the notes' demand for numerator-over-denominator, applied to irrationals, lands exactly on the word encoding — which is the thing the notes were reaching for with the alternating tower construction, and which the towers failed to be (2.3 bits, saturated).
+
+The instruction and the failed mechanism were aimed at the same target. The instruction reaches it.
+
+---
+
+## 5. The Complete Exact Statement of the Main Result
+
+With every decimal removed:
+
+> For a prime `p`, let `Λ_p = (ln p)·ℤ + 2πi·ℤ` and `τ_p = 2πi / ln p`.
+>
+> Then `ℂ/Λ_p ≅ ℂ*/p^ℤ` is the Tate curve, its height in the fundamental domain is `ln(p)/2π`, and its nome is
+>
+> ```
+> q = 1/p
+> ```
+>
+> exactly, with no decimal appearing anywhere in the statement. The decimal expansion of `q` repeats with period `ord_p(10)`, which divides `p − 1`.
+>
+> No `τ_p` is imaginary quadratic (Baker), so no curve in the family has complex multiplication and `j(τ_p)` is transcendental for every `p`.
+
+The heights `ln(p)/2π` are irrational and appear only as coordinates. The result itself — `q = 1/p` — is a fraction.
+
+---
+
+## 6. What the Instruction Is Actually For
+
+Read as a demand about notation, "express all decimals as fractions" is either trivial (for rationals) or impossible (for irrationals).
+
+Read as a demand about *results*, it is a discipline: **a result that cannot be stated without a decimal is not yet a result.** It is a measurement, and measurements are positions rather than facts.
+
+By that standard the project has produced a small number of genuine results — `q = 1/p`, `ln ζₙ/2πi = j/n`, `𝒜⁺ = 1/2`, `η`'s exponent `1/24` — and a large number of measurements. The proportion is roughly what twelve versions of refutation would suggest.
+
+The notes' instruction, applied to the notes' own project, is the sharpest evaluative tool in it.
+
+---
+
+*Cret, September 2026*
+
+*Every result of this work is a fraction. Everything that needed a decimal was a coordinate.*
