@@ -1,6 +1,6 @@
-# ln1 Notation v0.10
+# ln1 Notation v0.12
 
-**Base Change Is the Nome — and the Two 1/12's Are Not the Same 1/12**
+**Closing the Trajectory Half: Growing 𝒞, S3, and the Counting Theorem**
 
 Cret, September 2026
 
@@ -8,210 +8,149 @@ Cret, September 2026
 
 ## 0. What This Addendum Does
 
-Two claims to check.
+v0.11 said I would not add a twelfth mechanism to the arithmetic side, and I am not. This closes the *other* half — the trajectory algebra of v0.1–v0.3, which v0.8 showed cannot be joined to the arithmetic work and which has had three items open since then.
 
-The first — that `ln` and `log` are freely interchangeable — turns out to be false in an interesting way, and the way it fails collapses two separate moves in the notes into one.
-
-The second — that `ln ζ₁₂ = 2πi/12` and `ζ(−1) = −1/12` correspond, with `p = 13` a prime saddle point — does not hold. But there is a genuine bridge nearby, it is classical, and it lands on 24 rather than 12. Separating the real one from the numerological one is most of the work here.
+All three are settled here. Two of them fail in the same shape, and naming that shape is the useful part.
 
 ---
 
-## 1. Base Change Moves the Lattice
+## 1. Growing 𝒞 — The Last Route to S2
+
+v0.3 §7 identified one live route to tendency: if the configuration space grows so the ceiling recedes faster than the system climbs, stationarity never arrives and the Balance Theorem never bites.
+
+`K(t) = 16 + rate·t`, twelve trajectories, `Λ₃` as before.
+
+**The hidden choice:** the linking radius `ε`. As the space grows, does `ε` stay fixed (absolute distance) or scale with `K` (relative distance)? Nothing in v0.3 specified this, and it turns out to decide everything.
+
+| rate | ε convention | 𝒜⁺ | mean Λ* | drift/1k |
+|---|---|---|---|---|
+| 0.000 | absolute | 0.4991 | 18.066 | +0.010 |
+| 0.000 | relative | 0.5042 | 17.945 | +0.004 |
+| 0.001 | absolute | 0.4974 | **5.133** | −0.245 |
+| 0.001 | relative | 0.4971 | 14.483 | −0.024 |
+| 0.010 | absolute | 0.5003 | **0.203** | −0.017 |
+| 0.010 | relative | 0.4954 | 14.116 | −0.008 |
+| 0.100 | absolute | 0.5000 | **0.003** | −0.000 |
+| 0.100 | relative | 0.5012 | 14.142 | +0.002 |
+
+**𝒜⁺ = 1/2 in every row.**
+
+The two conventions fail differently and both fail:
+
+- **Absolute ε:** the space dilutes. Λ* collapses from 18 toward 0 — trajectories lose contact faster than they gain it. Growth *destroys* linking rather than enabling it.
+- **Relative ε:** the system is scale-invariant. Growing `K` with `ε ∝ K` is the fixed-`K` system in rescaled coordinates. Nothing happens, and `𝒜⁺ = 1/2` for exactly the v0.2 reasons.
+
+**The last route to S2 is closed.** Not by a narrow failure — by a dichotomy where one branch is trivial and the other is worse than trivial.
+
+---
+
+## 2. The Counting Theorem Is More General Than v0.3 Said
+
+The `rate = 0.001, absolute` row deserves attention: `Λ*` falls from 18 to 5, so the process is *manifestly not stationary*, yet `𝒜⁺ = 0.4974`.
+
+Decomposed over 30,000 steps:
 
 ```
-log_b(z) = ln(z) / ln(b)     ⟹     log_b(1) = 2πi·k / ln b
+P(up)     = 0.4987      P(down)   = 0.5013
+E[Δ|up]   = 1.9778      E[Δ|down] = 1.9653
+net/step  = +0.000733   ← nonzero, the process drifts
+𝒜⁺        = 0.4987
 ```
 
-So the kernel is not `2πiℤ` but `(2πi/ln b)·ℤ`.
+The drift is carried entirely by magnitudes. The counts stay at 1/2.
 
-| base b | period 2πi/ln b |
+> **Counting Theorem (generalising v0.3's S2″).** `𝒜⁺ ≠ 1/2` requires magnitude asymmetry — `E[Δ|up] ≠ E[Δ|down]` — whether or not the process is stationary.
+
+v0.3 derived this from the stationary balance equation and stated it under stationarity. It is stronger than that. `𝒜⁺` counts steps; step-count asymmetry and magnitude asymmetry are the only two ways a process can move, and `𝒜⁺` sees only the first. Drift lives in the second.
+
+This retroactively explains why every mechanism across v0.2, v0.3, and now v0.12 returned 1/2: none of them engineered magnitude asymmetry, and none of them could have, because all of them were symmetric in their step distributions by construction.
+
+---
+
+## 3. S3 Is Underdetermined
+
+The last untested axiom from v0.1:
+
+> **S3.** If `γ ⊗ ρ` and `ρ` freezes, `τ(γ ⋈ ρ†)` is preserved in `⟨γ⟩`.
+
+Operationalised: freeze two of twelve trajectories at `t = 5000` and measure whether the joint invariant still exceeds the invariant of the active ones alone.
+
+| reading of "freeze" | τ(γ⋈ρ†) − τ(γ) | verdict |
+|---|---|---|
+| ρ stops moving, stays in 𝒞 | **6.662 ± 1.407** | S3 holds |
+| ρ is removed from 𝒞 | **0.000 ± 0.000** | S3 fails |
+
+Both readings are trivial:
+
+- **"Stops moving"** — `ρ` is still a point in `𝒞`, still within `ε` of things, still contributing edges. Entanglement persists because nothing was removed.
+- **"Removed"** — the edges go with it. Entanglement vanishes because everything was removed.
+
+**S3 is not false. It is underdetermined.** Its truth value is fixed entirely by which reading you pick, and neither reading makes it informative.
+
+### 3.1 The Same Shape as §1
+
+This is the identical failure to growing `𝒞`:
+
+| claim | the undetermined choice | branch A | branch B |
+|---|---|---|---|
+| growing 𝒞 | is ε absolute or relative? | dilution | scale-invariance |
+| S3 | does freezing remove or immobilise? | vanishes | persists |
+
+In both cases the framework states a proposition, and the proposition's truth is decided by a modelling choice the framework never made. The measurement does not adjudicate; it just reports which choice you made.
+
+This is worth naming because it is a *third* kind of failure, distinct from the two the project has seen so far:
+
+1. **Refuted** — the claim is precise and measurement contradicts it. (S2, the towers, `e` from the bridges.)
+2. **Obstructed** — the claim is precise and a theorem forbids it. (Multiplicativity, rank, CM.)
+3. **Underdetermined** — the claim is not precise enough to have a truth value until an unstated choice is made. (Growing `𝒞`, S3, and — in a different register — the physical constants in v0.9.)
+
+The third is the least satisfying to discover because there is nothing to fix. You cannot make an underdetermined claim true; you can only replace it with a determinate one, which is a different claim.
+
+---
+
+## 4. Final Status of the Trajectory Half
+
+| item | status |
 |---|---|
-| 2 | 9.064720i |
-| 3 | 5.719202i |
-| 5 | 3.903963i |
-| 7 | 3.228919i |
-| 10 | 2.728753i |
-| e | 6.283185i |
+| S1 — configuration completeness | never operationalised; would need a construction of `𝒞`, which was never given |
+| S2 — tendency | **refuted** (v0.2), not recoverable by path-dependence (v0.3), heterogeneous branching (v0.3), or growing `𝒞` (v0.12) |
+| S2′ — equilibrium shift | **holds**, across three linking measures and two mechanisms |
+| S2″ → Counting Theorem | **holds**, and more generally than first stated |
+| S3 — entanglement persistence | **underdetermined** |
+| D1–D4 | definitional, carry no content |
 
-Compare v0.7's table of `τ_q = 2πi/ln q`. **They are the same numbers.**
+What survives from v0.1–v0.3 is: **S2′ and the Counting Theorem.** One empirical regularity and one small theorem.
 
-> The period of `log` base `b` is exactly `τ_b`, the modular parameter obtained in v0.7 by "putting the origin at a prime."
-
-So the notes' two separate moves —
-
-```
-原點可定位在質數 2 上
-ln 與 log 可交替轉換使用
-```
-
-— are **one move**. Changing the logarithm base *is* choosing the nome. That is a genuine unification of two lines in the notes that I had been treating independently, and it is worth having.
-
-### 1.1 The Consequence Is That Base Change Is Not Free
-
-Different bases give different lattices, hence different Tate curves, hence different `j`-invariants. `log₂` and `log₃` are not two notations for one object; they are two objects.
-
-So "可交替轉換使用" is true as an *algebraic* statement — every `log_b` is `ln` divided by a constant — and false as a *structural* one. Dividing by `ln b` rescales the period, and the period is the whole content.
-
-`ln` is canonical among the bases because it is the unique one whose real generator is `1`. Any other base has a real generator of `ln b ≠ 1`, and then the two axes are not normalised against each other.
-
-### 1.2 It Also Answers v0.7 §7
-
-That open question was whether "可隨意調整位置" (freely adjustable origin) is a structure or a convention. It is a structure: each base gives a different curve with a different `j`. The freedom is real freedom of choice, not a freedom of relabelling — you are picking which curve to work on, and the choice is consequential.
+The Counting Theorem is the more useful of the two, and it generalises past this framework: *any* time someone reports "most changes were improvements" as evidence of progress in a bounded system, the theorem says that statistic is about step counts and carries no information about direction unless magnitudes are also reported. That is a real and transferable caution.
 
 ---
 
-## 2. The Two 1/12's
+## 5. The Whole Project, Twelve Versions On
 
-### 2.1 They Have Different Origins
+Two investigations that share a name and cannot be joined (v0.8).
 
-**(a) `ln ζ₁₂ = 2πi·(1/12)`**
+**Arithmetic half (v0.4–v0.11).** Every structural instinct in the notes decoded to a real object — branch lattice, winding number, nome, the degree-2 extension. The endpoint is exact and derived: *base p ⟺ nome 1/p ⟺ the Tate curve ℂ\*/p^ℤ, at height ln(p)/2π, accumulating at the cusp, provably never CM*. Correct, small, and already-known. Three theorems block the routes to ABC and Riemann.
 
-The `1/12` here is `j/n` with `n = 12` — a cyclotomic index. Nothing distinguishes it:
+**Trajectory half (v0.1–v0.3, v0.12).** S2 refuted four different ways. S2′ and the Counting Theorem survive. S1 was never made precise; S3 cannot be.
 
-```
-ln ζ₁₁ = 2πi·(1/11) = 0.5711986643i
-ln ζ₁₂ = 2πi·(1/12) = 0.5235987756i
-ln ζ₁₃ = 2πi·(1/13) = 0.4833219467i
-```
+**The pattern, across both halves.** Structural claims in the notes: right, repeatedly, and often right in ways I initially dismissed. Quantitative and mechanical claims: wrong on measurement, without exception. Twelve versions and that asymmetry never reversed.
 
-`ζ₁₂` appeared in the v0.9 table only because it was one of the examples I picked. `1/13` is equally present and equally unremarkable. If I had listed `ζ₇` and `ζ₉` instead, no `1/12` would have appeared at all.
-
-**(b) `ζ(−1) = −1/12`**
-
-Verified: `ζ(−1) = −0.0833333333333333333` by analytic continuation.
-
-This is a special value of a specific function at a specific point. It carries a sign, and the sign is negative. The series `1+2+3+⋯` diverges — partial sums are 55, 5050, 500500 — and `−1/12` is not its sum. It is the value the continuation takes at `s = −1`, joined to the series by a procedure rather than by an equality.
-
-**Same digits, different objects.** A cyclotomic index and a special value. Identifying them directly is numerology, and the `1/11` and `1/13` rows are the reason: they show the `12` in (a) has no privileged status.
-
-### 2.2 Where 13 Actually Meets 12
-
-There is one real relation, and it is not the one proposed:
-
-```
-φ(11) = 10   ⟹  [ℚ(ζ₁₁) : ℚ] = 10
-φ(13) = 12   ⟹  [ℚ(ζ₁₃) : ℚ] = 12
-φ(17) = 16   ⟹  [ℚ(ζ₁₇) : ℚ] = 16
-```
-
-`ℚ(ζ₁₃)` has degree 12 over `ℚ` because `φ(13) = 12`. That is genuine, and it is the reason 12 sits near 13 at all.
-
-But this 12 is a **field degree**. It is a third distinct 12:
-
-| 12 | what it is |
-|---|---|
-| `φ(13) = 12` | a field degree |
-| `ζ(−1) = −1/12` | a special value |
-| `ln ζ₁₂ = 2πi/12` | a cyclotomic index |
-
-Three different objects with the same numeral. And `13` is not distinguished among primes here — `φ(p) = p−1` for every prime, so every prime has this property. There is no saddle point at 13.
+I would take that as the project's actual finding. Not a result about ABC or about tendency, but a calibrated statement about a body of intuition: the *shapes* it reaches for are real and worth decoding, and the *mechanisms* it proposes for them are not. That is unusual enough to be worth knowing, and it is more useful going forward than any of the individual refutations.
 
 ---
 
-## 3. The Bridge That Is Real
+## 6. What I Would Do Now
 
-The instinct that `ζ(−1)` connects to roots of unity is **correct**. The connection exists, it is classical, and it runs through the Dedekind eta function.
+**Stop adding mechanisms.** Twelve versions, and the last eight each ended in a theorem or a dichotomy rather than a gap. That is a boundary.
 
-```
-η(τ) = q^{1/24} ∏_{n≥1} (1 − qⁿ),      q = e^{2πiτ}
-```
+**Write up the one exact result.** `ln1 ≠ ln1` → branch lattice → prime as nome → `ℂ*/p^ℤ` with `q = 1/p` is a clean five-line derivation from the notes' opening. It is not new mathematics but it is a correct and self-contained piece of exposition, and it is the only thing in twelve versions that is both exact and yours.
 
-Where does `1/24` come from?
+**Keep the Counting Theorem.** It is small, it is true, and it applies outside this project.
 
-```
-ζ(−1)     = −0.0833333333333333333
-−ζ(−1)/2  =  0.0416666666666666667
-1/24      =  0.0416666666666666667
-```
-
-The exponent is `−ζ(−1)/2`. **The `1/12` enters `η` as `1/24`.**
-
-### 3.1 The Multiplier Is a 24th Root of Unity
-
-At `τ = 0.3 + 1.1i`:
-
-```
-η(τ+1)/η(τ)  = 0.96592582628907 + 0.25881904510252i
-e^{2πi/24}   = 0.96592582628907 + 0.25881904510252i
-difference   = 1.1e−31
-```
-
-Exactly a primitive 24th root of unity.
-
-```
-ζ(−1) = −1/12   →   exponent 1/24   →   ζ₂₄ ∈ μ_∞
-```
-
-**This is the genuine link between the special value and the cyclotomic world of v0.9.** Not `ζ₁₂` — `ζ₂₄`, and the factor of 2 is not negotiable.
-
-### 3.2 And S Acts Too
-
-```
-η(−1/τ)      = 0.799617382906 − 0.0444507197496i
-√(−iτ)·η(τ)  = 0.799617382906 − 0.0444507197496i
-difference   = 4.9e−31
-```
-
-`η` is a modular form of weight 1/2 with a 24th-root multiplier system, and both generators `S` and `T` act on it — the same `S` and `T` from v0.4.
-
-So the chain is:
-
-```
-ζ(−1) = −1/12  →  η's exponent 1/24  →  ζ₂₄  →  multiplier system  →  SL(2,ℤ)
-```
-
-Every arrow is a theorem. This is the correspondence the intuition was reaching for, and it is better than the proposed one because it actually holds.
+**Let the rest go.** The interpretive material — the 220 completions, the trajectory-to-meaning mappings — was never load-bearing on any of this, and none of the refutations above touch it. But equally, nothing above supports it, and it should not be presented as though the formal work does.
 
 ---
 
-## 4. The Symmetry-Breaking Instinct
+*ln1 Notation v0.12 — Cret*
 
-Not wrong about the family of idea, wrong about the mechanism.
-
-The same `1/24` fixes the critical dimension of the bosonic string:
-
-```
-D − 2 = 24     ⟹     D = 26
-```
-
-and it arises from ζ-regularising `Σn` — the same regularisation that gives `−1/12`. The cancellation is an **anomaly cancellation**, which is a symmetry statement, and the theory is inconsistent away from `D = 26`.
-
-So "symmetry breaking / phase transition" is the right neighbourhood for where `1/24` appears. But:
-
-- the mechanism is anomaly cancellation in a specific quantum theory, not a phase transition in the statistical-mechanics sense
-- the number is 24
-- no prime plays any role, and 13 in particular plays none
-
-The instinct located the right region of mathematics. The specific identification did not survive.
-
----
-
-## 5. Ledger Update
-
-**Refuted (v0.10):**
-- `ln` and `log` freely interchangeable — false structurally; base change rescales the period
-- `ln ζ₁₂ = 2πi/12` ↔ `ζ(−1) = −1/12` — different objects, and `1/11`, `1/13` are equally present
-- `p = 13` as a prime saddle point — no basis; `φ(p) = p−1` holds for every prime
-
-**Established (v0.10):**
-- **base change = choice of nome**: `period(log_b) = τ_b`, collapsing two lines of the notes into one operation
-- **v0.7 §7 answered**: the origin's adjustability is structural, not conventional — different bases give different curves with different `j`
-- **the real bridge**: `ζ(−1) = −1/12` → `η`'s exponent `1/24` → primitive 24th root of unity → the `SL(2,ℤ)` multiplier system, verified to 1e−31
-
----
-
-## 6. Note on Method
-
-The v0.7 §8 asymmetry holds for a fifth and sixth time, and now in both directions within a single message.
-
-**Structural claim, correct:** "ln 與 log 可交替轉換" pointed at something real — base change *is* the nome — and unified two separate moves in the notes. I would not have found that connection on my own; it came from the claim.
-
-**Numerical claim, false:** the `1/12` ↔ `1/12` identification. And the way it fails is instructive: the `12` in the cyclotomic column was an artefact of which examples I happened to tabulate in v0.9. Had I listed different roots of unity, the coincidence would not have been visible to notice.
-
-That is the specific hazard with `1/12`: it appears in enough places that a coincidence is nearly guaranteed, and the ones that matter (the `η` exponent) are separated from the ones that do not (a cyclotomic index) only by tracing where each came from. Digits agreeing is not evidence. The provenance is the evidence, and here the provenance says 24.
-
----
-
-*ln1 Notation v0.10 — Cret*
-
-*Changing the base is choosing the curve. And the 1/12 that matters shows up as 1/24.*
+*Three ways to fail: contradicted, forbidden, or never precise enough to be either. This half ended with two of the third.*
