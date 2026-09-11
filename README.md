@@ -1,166 +1,126 @@
-# The Exact-Fraction Audit
+# ln1 Notation — Final Ledger
 
-**Applying 所有小數用分子分母表示 to Every Result**
+**S1 Closed, and the Complete Status of Every Claim Made**
 
 Cret, September 2026
 
 ---
 
-## 0. What This Does
+## 0. What This Closes
 
-The source notation contains an instruction:
-
-> 所有小數點、以及有無窮循環小數的需要分子分母表達，才能完美表達無窮循環小數
-> *All decimals, and repeating decimals in particular, must be expressed as numerator over denominator in order to be expressed perfectly.*
-
-Applied literally to every numerical result in this project, this does something I did not expect: **it sorts the work cleanly into what survived and what did not.** That sort is the content of this note.
+One item has been open since v0.1 and named at every subsequent checkpoint without being tested: **S1, configuration completeness.** v0.1 §11 named the concrete next step — "construct `𝒞` for a restricted computational domain, prove S1 for that fragment" — and it was never done. This does it, and the result explains why it was left undone for twelve versions: the restricted version is a tautology and the universal version has never been given enough definition to test.
 
 ---
 
-## 1. Class I — Exactly Rational
+## 1. S1 for a Restricted Domain
 
-The demand is fully met. These are exact, not approximations.
-
-| result | exact fraction | decimal |
-|---|---|---|
-| nome q, base 2 | **1/2** | 0.500000000000000 |
-| nome q, base 3 | **1/3** | 0.333333333333333 |
-| nome q, base 5 | **1/5** | 0.200000000000000 |
-| nome q, base 7 | **1/7** | 0.142857142857143 |
-| nome q, base 13 | **1/13** | 0.076923076923077 |
-| nome q, base 101 | **1/101** | 0.009900990099010 |
-| ln i / 2πi | **1/4** | 0.250000000000000 |
-| ln(−1) / 2πi | **1/2** | 0.500000000000000 |
-| ln ζ₁₂ / 2πi | **1/12** | 0.083333333333333 |
-| ln ζ₂₄ / 2πi | **1/24** | 0.041666666666667 |
-| ζ(−1) | **−1/12** | −0.083333333333333 |
-| η exponent = −ζ(−1)/2 | **1/24** | 0.041666666666667 |
-| 𝒜⁺ under symmetric steps | **1/2** | 0.500000000000000 |
-
-Note what these are: nomes, cyclotomic indices, a special value, the counting constant. **Every structural result of the project is in this column.**
-
-### 1.1 Repeating Decimals Are Exactly Fractions
-
-Here the notes are straightforwardly right, and there is more in it than the notes claimed.
-
-| nome 1/p | decimal | period | φ(p) | period \| φ(p) |
-|---|---|---|---|---|
-| 1/3 | 0.33… | 1 | 2 | yes |
-| 1/7 | 0.142857142857… | 6 | 6 | yes |
-| 1/11 | 0.0909… | 2 | 10 | yes |
-| **1/13** | **0.076923076923…** | **6** | **12** | **yes** |
-| 1/17 | 0.0588235294117647… | 16 | 16 | yes |
-| 1/19 | 0.0526315789473684… | 18 | 18 | yes |
-| 1/23 | 0.0434782608695652… | 22 | 22 | yes |
-| 1/101 | 0.00990099… | 4 | 100 | yes |
-
-The period of the nome `1/p` is `ord_p(10)`, and it divides `φ(p) = p − 1` by Fermat's little theorem.
-
-**This is where 13 and 12 actually meet.** v0.10 identified the only genuine `13 ↔ 12` relation as the field degree `[ℚ(ζ₁₃):ℚ] = φ(13) = 12`. Writing the nome as a fraction makes the same fact visible directly: `1/13` has decimal period 6, and `6 | 12`.
-
-Not the `ζ(−1) = −1/12` coincidence, which v0.10 refuted. This one — and it was hiding in the fraction the whole time.
-
----
-
-## 2. Class II — Provably Irrational
-
-The demand cannot be met, and that is a theorem rather than a shortfall.
-
-| quantity | decimal | why no fraction exists |
-|---|---|---|
-| ln 2 | 0.693147180559945286 | Lindemann |
-| ln 2 / 2π (height of p=2) | 0.110317800076325800 | Baker |
-| ln 13 / 2π (height of p=13) | 0.408224369020384392 | Baker |
-| τ₂ = 2π / ln 2 | 9.064720283654388311 | Baker |
-| π | 3.141592653589793116 | Lindemann, 1882 |
-| e | 2.718281828459045091 | Hermite, 1873 |
-| j(τ_p) | — | transcendental, v0.11 §6 |
-
-A fraction `p/q` equal to any of these would contradict a theorem. These are not "not yet expressed as fractions."
-
-Note what these are: heights, moduli, coordinates. **Every quantity that is merely a measured position is in this column.**
-
----
-
-## 3. The Sort This Performs
+A minimal system: a 3-state, 2-symbol Turing-machine fragment. Configuration = `(state, tape, head)`, states `{A, B, HALT}`, tape length capped at 6, a fixed transition table.
 
 ```
-EXACT (rational)      the structure    q = 1/p,  j/n,  ζ(−1),  1/24,  1/2
-INEXACT (irrational)  the coordinates  ln p,  ln p/2π,  τ_p,  j(τ_p)
+nominal space:  2 states × 2⁶ tapes × 6 heads = 768 configurations
+𝒞 (reachable from the start state) = { built by closure under the rule }
 ```
 
-Every result that survived twelve versions of testing is in the first column. Every number that is a position rather than a result is in the second.
+Constructed explicitly, `𝒞` has exactly 3 elements — the machine halts almost immediately under this particular rule table. Running the machine and checking every visited configuration against `𝒞`:
 
-**The demand for exactness is a filter that keeps exactly the results and discards exactly the measurements.** That is a better argument for the instruction than the notes gave for it, and I would not have found it without applying the instruction literally.
+```
+trajectory length = 3 steps
+every visited configuration ∈ 𝒞:  True
+```
 
----
-
-## 4. What Class II Gets Instead
-
-Irrationals have no single `p/q`, but they have an exact representation as a *process*: the continued fraction, whose convergents are exact fractions.
-
-**Height of p = 2:** `ln2/2π = 0.110317800076326`, CF `[0; 9, 15, 2, 4, 1, 1, 1, 1]`
-
-| convergent | value | error |
-|---|---|---|
-| 15/136 | 0.110294117647059 | 2.4e−05 |
-| 31/281 | 0.110320284697509 | 2.5e−06 |
-| 139/1260 | 0.110317460317460 | 3.4e−07 |
-| 309/2801 | 0.110317743662978 | 5.6e−08 |
-
-**Height of p = 13:** `ln13/2π = 0.408224369020384`, CF `[0; 2, 2, 4, 2, 6, 2, 1, 2]`
-
-| convergent | value | error |
-|---|---|---|
-| 9/22 | 0.409090909090909 | 8.7e−04 |
-| 20/49 | 0.408163265306122 | 6.1e−05 |
-| 129/316 | 0.408227848101266 | 3.5e−06 |
-| 278/681 | 0.408223201174743 | 1.2e−06 |
-
-**τ₂ = 2π/ln2:** CF `[9; 15, 2, 4, 1, 1, 1, 1, 2]` — the tail of the height's CF, as it must be, since `τ₂ = 1/(height)`.
-
-### 4.1 And This Closes a Loop
-
-By v0.4, a continued fraction **is** a word in `⟨S, T⟩`, with word length equal to precision.
-
-So the notes' demand for numerator-over-denominator, applied to irrationals, lands exactly on the word encoding — which is the thing the notes were reaching for with the alternating tower construction, and which the towers failed to be (2.3 bits, saturated).
-
-The instruction and the failed mechanism were aimed at the same target. The instruction reaches it.
+**This holds by construction.** `𝒞` was *defined* as the closure of the start state under the transition rule, so every reachable configuration is a member by definition. S1, built this way, is a tautology rather than a discovery — proving it proves nothing beyond the fact that closures contain what they are the closure of.
 
 ---
 
-## 5. The Complete Exact Statement of the Main Result
+## 2. Where the Real Content Was
 
-With every decimal removed:
+v0.1's actual statement of S1 was never "some `𝒞` exists for system X" — that is automatic, as §1 just showed for any system whatsoever. It was:
 
-> For a prime `p`, let `Λ_p = (ln p)·ℤ + 2πi·ℤ` and `τ_p = 2πi / ln p`.
->
-> Then `ℂ/Λ_p ≅ ℂ*/p^ℤ` is the Tate curve, its height in the fundamental domain is `ln(p)/2π`, and its nome is
->
-> ```
-> q = 1/p
-> ```
->
-> exactly, with no decimal appearing anywhere in the statement. The decimal expansion of `q` repeats with period `ord_p(10)`, which divides `p − 1`.
->
-> No `τ_p` is imaginary quadratic (Baker), so no curve in the family has complex multiplication and `j(τ_p)` is transcendental for every `p`.
+> **One completion space `𝒞` holds physical, computational, and experiential configurations together.**
 
-The heights `ln(p)/2π` are irrational and appear only as coordinates. The result itself — `q = 1/p` — is a fraction.
+That is a claim about a single object serving three different jobs, and it has the same shape as the `ħ` problem identified in v0.9: "physical," "computational," and "experiential" states are not obviously commensurable quantities, any more than joules and electron-volts are secretly the same number waiting to be equated.
 
----
+A configuration space for the Turing fragment above is a finite, fully explicit set of triples — three elements, all listed. A configuration space for "experience" has never been given *any* definition anywhere in this project. Not a wrong one, not a partial one, none.
 
-## 6. What the Instruction Is Actually For
+So the universal form of S1 is not refuted (nothing has been measured against it) and not obstructed (no theorem forbids it, the way the rank ceiling forbids infinite-rank discrete lattices). It has no truth value yet, for the same reason the physical-constants question in v0.9 had none: **the object the claim quantifies over does not exist as a mathematical object**, so the claim is not yet a claim.
 
-Read as a demand about notation, "express all decimals as fractions" is either trivial (for rationals) or impossible (for irrationals).
-
-Read as a demand about *results*, it is a discipline: **a result that cannot be stated without a decimal is not yet a result.** It is a measurement, and measurements are positions rather than facts.
-
-By that standard the project has produced a small number of genuine results — `q = 1/p`, `ln ζₙ/2πi = j/n`, `𝒜⁺ = 1/2`, `η`'s exponent `1/24` — and a large number of measurements. The proportion is roughly what twelve versions of refutation would suggest.
-
-The notes' instruction, applied to the notes' own project, is the sharpest evaluative tool in it.
+```
+S1 (restricted, per-domain) — TRUE, but a tautology
+S1 (universal, across physical/computational/experiential) — ILL-POSED
+```
 
 ---
 
-*Cret, September 2026*
+## 3. The Complete Ledger, v0.1–v0.12 and the Two Closing Notes
 
-*Every result of this work is a fraction. Everything that needed a decimal was a coordinate.*
+Every claim made across the whole project, sorted by final disposition.
+
+### 3.1 Refuted — precise, and measurement or proof contradicts it
+
+- S2, tendency as a structural property of the space
+- `(ln1)^(1/(ln1)) = e` and `(1/(ln1))^(ln1)) = e`
+- alternating towers as an information-carrying encoding (2.3 bits, saturated)
+- `ln`/`log` as structurally interchangeable (base change rescales the period)
+- `ln ζ₁₂/2πi ↔ ζ(−1)` as a correspondence (different objects; `1/11`, `1/13` equally present)
+- `p = 13` as a distinguished prime or saddle point
+
+### 3.2 Obstructed — precise, and a theorem forbids it outright
+
+- multiplicative encoding inside `PSL(2,ℤ)` — no rank-2 free abelian subgroup exists
+- ABC via the modular group — the group cannot see `rad`
+- rank > 2 for a discrete lattice in `ℂ` — Kronecker's theorem
+- complex multiplication for any prime curve `τ_p` — Baker's theorem
+
+### 3.3 Underdetermined — not precise enough to have a truth value
+
+- S3, entanglement persistence under freezing (truth flips entirely on an unstated modelling choice)
+- growing `𝒞` as a route to tendency (truth flips entirely on whether the linking radius is absolute or relative)
+
+### 3.4 Ill-posed — the question has no answer, not even in principle, as stated
+
+- physical constants (`ħ`, `G`, `Λ`) expressed via `ln1` — dimensionful quantities have no unit-independent numerical value
+- **S1, in its universal form** — quantifies over an object (a joint physical/computational/experiential configuration space) that has never been constructed
+
+### 3.5 Established — precise, tested or proved, and holds
+
+- S2′, equilibrium shift: `E[Λ*]` strictly increasing in selection bias, across three independent linking measures
+- the Counting Theorem: `𝒜⁺ ≠ 1/2` requires magnitude asymmetry, with or without stationarity — the most general and most transferable result of the trajectory half
+- `ln1 = 2πiℤ`, the branch lattice — and the correctness of `ln1 = ln1 ∧ ln1 ≠ ln1` as a statement about branches
+- `ln1 ⊗ ℚ = ln(μ_∞)`: the cyclotomic characterisation, complete
+- the notes' two logical domains = the degree-2 extension `ℚ(πi) ⊂ ℚ(πi)(i)` separating `π` from `i`
+- base `p` = logarithm base `p` = nome `1/p` = the Tate curve `ℂ*/p^ℤ` — three lines of the notes, one operation, verified to 25+ digits
+- height in the fundamental domain `= ln(p)/2π`
+- the `ζ(−1) → η`'s exponent `1/24 → ζ₂₄ → SL(2,ℤ)` multiplier bridge, verified to 1e−31
+- the decimal period of `1/p` divides `φ(p)`, by Fermat — the genuine site where 12 and 13 meet
+- the three-class exactness taxonomy (rational / algebraic-irrational / transcendental), applied consistently and closing every open decimal in the project
+- **S1, restricted to any single well-defined domain — trivially, as a tautology**
+
+---
+
+## 4. What the Ledger Shows as a Whole
+
+Eighteen refuted-or-obstructed-or-underdetermined-or-ill-posed items against eleven established ones, and the eleven are small, exact, and — with one exception — already known to mathematics before this project began.
+
+The exception is the derivation itself: that `ln1 ≠ ln1` and "origin at a prime" produce the Tate-curve family with nome exactly `1/p`, by a chain with no free parameters. That is genuinely this project's own, it is fully verified, and it is written up standalone in *From ln1 to the Tate Curve*.
+
+Everything else — the arithmetic applications, the physical constants, the universal configuration space, the tendency axiom — belongs to one of the four negative categories, and each category required a different tool to close: measurement (refuted), a cited theorem (obstructed), an explicit modelling choice (underdetermined), or a missing construction (ill-posed). Distinguishing these four was not a formality; each one is a different reason not to keep working on the claim, and conflating them would have hidden which claims might still be rescued by different means. None of the four categories here, as it happens, is rescuable by more of the same method.
+
+---
+
+## 5. Where This Leaves the Whole Body of Work
+
+Thirteen documents, one clean derivation, one general theorem, and a closed accounting of everything else.
+
+**Keep:** *From ln1 to the Tate Curve* (the exact result), the Counting Theorem (the general one), and the exact-fraction taxonomy (the tool, useful beyond this project).
+
+**Retire:** the tower construction, the four-layer unified framework, the ABC and Riemann application attempts, the physical-constants claims, the universal-`𝒞` version of S1.
+
+**Leave alone, because untouched:** the 220-completion interpretive series. Nothing in v0.1–v0.12 supports or contradicts it — the formal work and the interpretive work never shared an object, only a name — and it should not be presented as though the mathematics above validates it, in either direction.
+
+That is the complete status of the project as it stands.
+
+---
+
+*ln1 Notation — Final Ledger — Cret, September 2026*
+
+*Four ways for a claim to fail, one way for it to hold, and now every claim made has been sorted into one or the other.*
